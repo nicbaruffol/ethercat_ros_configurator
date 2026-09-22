@@ -84,7 +84,12 @@ void EthercatDeviceRos<maxon::Maxon>::worker(){
     last_command_msg_ptr_->profileAcceleration = 0;
     last_command_msg_ptr_->profileDeceleration = 0;
 
-    ROS_INFO_STREAM("Maxon '" << device_ptr_->getName() << " Starting Homing");
+    if (ros::param::param("/skip_homing", false)) {
+        ROS_WARN_STREAM("Maxon '" << device_ptr_->getName() << "': /skip_homing is set, skipping homing.");
+        homingAttained = true;
+    } else {
+        ROS_INFO_STREAM("Maxon '" << device_ptr_->getName() << " Starting Homing");
+    }
 
     while(!abrt && !homingAttained){
         if(!device_enabled_){
@@ -124,6 +129,20 @@ void EthercatDeviceRos<maxon::Maxon>::worker(){
         }
     }
 
+    // Re-sync the held command with the actual state reached during homing (or, with
+    // /skip_homing, wherever the motor already was). Without this, the run loop below
+    // starts out commanding the stale pre-homing snapshot taken at the top of worker(),
+    // which can be far from the actual post-homing state and made the motor snap/drift
+    // until it hit a safety limit.
+    {
+        maxon::Reading post_homing_reading;
+        device_ptr_->getReading(post_homing_reading);
+        lock.lock();
+        last_command_msg_ptr_->targetPosition = post_homing_reading.getActualPositionRaw();
+        last_command_msg_ptr_->targetVelocity = post_homing_reading.getActualVelocityRaw();
+        last_command_msg_ptr_->targetTorque = post_homing_reading.getActualCurrentRaw();
+        lock.unlock();
+    }
 
     while(!abrt){
         if(!device_enabled_){

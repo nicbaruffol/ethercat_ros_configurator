@@ -21,25 +21,17 @@ ethercat_devices:
   #   initial_mode_of_operation: 8
   
   - type:               Maxon
-    name:               Maxon_Motor_bottom
-    configuration_file: device_configurations/maxon16.yaml
-    ethercat_bus:       eno1
-    ethercat_address:   1
-    thread_frequency:   200
-    initial_mode_of_operation: 10
-
-  - type:               Maxon
     name:               Maxon_Motor_top
     configuration_file: device_configurations/maxon16.yaml
     ethercat_bus:       eno1
-    ethercat_address:   2
-    thread_frequency:   200
+    ethercat_address:   1
+    thread_frequency:   100
     initial_mode_of_operation: 10
 
-  # - type:               Maxon
-  #   name:               Maxon_Motor_top
-  #   configuration_file: device_configurations/maxon16.yaml
-  #   ethercat_bus:       eno1
-  #   ethercat_address:   1
-  #   thread_frequency:   100
-  #   initial_mode_of_operation: 6
+  - type:               Maxon
+    name:               Maxon_Motor_bottom
+    configuration_file: device_configurations/maxon16.yaml
+    ethercat_bus:       eno1
+    ethercat_address:   2
+    thread_frequency:   100
+    initial_mode_of_operation: 10

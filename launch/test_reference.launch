@@ -2,14 +2,14 @@
 <launch>
 <!-- MAXON -->
     <group>
-            <param name="duration" value="3.0" type="double"/>
+            <param name="duration" value="15.0" type="double"/>
 
             <param name="op_mode" value="9" type="int"/>
-            <param name="amplitude" value="500" type="double" />
+            <param name="amplitude" value="500" type="double" /> <!-- counts/s, ~7.3 rpm peak -->
             <param name="signal" value="sine" type="string"/>
 
             <param name="sample_rate" value="100" type="double"/>
-            <param name="frequency" value="1" type="double"/>
+            <param name="frequency" value="0.4" type="double"/> <!-- 2.5 s period, half of before -->
             <param name="offset" value="0" type="double"/>
             <param name="phase_shift" value="0.0" type="double"/>
 
