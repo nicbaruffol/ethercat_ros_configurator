@@ -25,7 +25,7 @@ ethercat_devices:
     configuration_file: device_configurations/maxon16.yaml
     ethercat_bus:       eno1
     ethercat_address:   1
-    thread_frequency:   100
+    thread_frequency:   200
     initial_mode_of_operation: 10
 
   - type:               Maxon
@@ -33,5 +33,5 @@ ethercat_devices:
     configuration_file: device_configurations/maxon16.yaml
     ethercat_bus:       eno1
     ethercat_address:   2
-    thread_frequency:   100
+    thread_frequency:   200
     initial_mode_of_operation: 10
